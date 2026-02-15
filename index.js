@@ -1,6 +1,5 @@
 // 定数宣言
 const DB = "farmStand";
-const DB_CONNECT_MSG = "MongoDB connected!!";
 const PORT = 3000;
 
 // Required Package and Mongoose
@@ -14,7 +13,7 @@ mongoose
         useUnifiedTopology: true,
     })
     .then(() => {
-        console.log("Success:", DB_CONNECT_MSG);
+        console.log("Success: MongoDB connected!!");
     })
     .catch((err) => {
         console.log("Error:", err);
