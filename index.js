@@ -21,11 +21,12 @@ mongoose
     });
 
 // Express Settings
-app.set("views", path.join(__dirname), "views");
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.get("/dog", (req, res) => {
-    res.send("wanwan");
+app.get("/products", async (req, res) => {
+    const products = await Product.find();
+    res.render("products/index", { products });
 });
 
 // Express Server Setup
