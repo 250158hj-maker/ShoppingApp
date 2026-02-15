@@ -13,13 +13,46 @@ mongoose
         console.log("Error:", err);
     });
 
-const p = new Product({
-    name: "ルビーグレープフルーツ",
-    price: 198,
-    category: "果物",
-});
+Product.deleteMany()
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
-p.save()
+Product.insertMany([
+    {
+        name: "ルビーグレープフルーツ",
+        price: 198,
+        category: "果物",
+    },
+    {
+        name: "ナス",
+        price: 98,
+        category: "野菜",
+    },
+    {
+        name: "カットメロン",
+        price: 480,
+        category: "果物",
+    },
+    {
+        name: "種無しスイカのカット",
+        price: 380,
+        category: "果物",
+    },
+    {
+        name: "オーガニックセロリ",
+        price: 198,
+        category: "野菜",
+    },
+    {
+        name: "コーヒー牛乳",
+        price: 298,
+        category: "乳製品",
+    },
+])
     .then((data) => {
         console.log(data);
     })
