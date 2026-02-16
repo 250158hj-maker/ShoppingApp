@@ -58,6 +58,7 @@ app.get(`${PRODUCTS_ENDPOINT}/:id/edit`, async (req, res) => {
     res.render(`${VIEWS_DIRECTORY}/edit`, { product });
 });
 
+// 商品の編集
 app.put(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     console.log(req.body);
     res.send("put!!");
