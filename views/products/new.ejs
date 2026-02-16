@@ -24,9 +24,9 @@
             <p>
                 <label for="category">カテゴリー : </label>
                 <select name="category" id="category">
-                    <option value="果物">果物</option>
-                    <option value="野菜">野菜</option>
-                    <option value="乳製品">乳製品</option>
+                    <% for (let category of categories) { %>
+                    <option value="<%= category %>"><%= category %></option>
+                    <% } %>
                 </select>
             </p>
             <p><button>登録する</button></p>

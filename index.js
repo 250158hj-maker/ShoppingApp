@@ -4,6 +4,7 @@ const DB = "farmStand";
 const PRODUCTS_ENDPOINT = "/products";
 const VIEWS_DIRECTORY = "products";
 
+const categories = ["野菜", "果物", "乳製品", "パン類"];
 const PORT = 3000;
 
 // Required Package and Mongoose
@@ -13,6 +14,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Product = require("./models/product");
+const { createHistogram } = require("perf_hooks");
 mongoose
     .connect(`mongodb://localhost:27017/${DB}`, {
         useNewUrlParser: true,
@@ -40,7 +42,7 @@ app.get(PRODUCTS_ENDPOINT, async (req, res) => {
 
 // 新規商品作成ページへ
 app.get(`${PRODUCTS_ENDPOINT}/new`, (req, res) => {
-    res.render(`${VIEWS_DIRECTORY}/new`);
+    res.render(`${VIEWS_DIRECTORY}/new`, { categories });
 });
 
 // 新規商品登録
@@ -55,7 +57,7 @@ app.post(PRODUCTS_ENDPOINT, async (req, res) => {
 app.get(`${PRODUCTS_ENDPOINT}/:id/edit`, async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
-    res.render(`${VIEWS_DIRECTORY}/edit`, { product });
+    res.render(`${VIEWS_DIRECTORY}/edit`, { product, categories });
 });
 
 // 商品の編集
