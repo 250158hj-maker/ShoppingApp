@@ -60,8 +60,14 @@ app.get(`${PRODUCTS_ENDPOINT}/:id/edit`, async (req, res) => {
 
 // 商品の編集
 app.put(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
-    console.log(req.body);
-    res.send("put!!");
+    const { id } = req.params;
+    // --- 本来はここでバリデーションチェックが必要
+    const product = await Product.findByIdAndUpdate(id, req.body, {
+        new: true,
+        runValidators: true,
+    });
+    // mongoDBから帰ってきた確実なIDを使用
+    res.redirect(`${PRODUCTS_ENDPOINT}/${product._id}`);
 });
 
 // 詳細表示
