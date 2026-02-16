@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FarmApp | New</title>
+    </head>
+    <body>
+        <h1>商品の新規登録</h1>
+        <form action="/products" method="post">
+            <p>
+                <label for="name">商品名 : </label>
+                <input type="text" name="name" id="name" placeholder="商品名" />
+            </p>
+            <p>
+                <label for="price">価格 : </label>
+                <input
+                    type="number"
+                    name="price"
+                    id="price"
+                    placeholder="価格"
+                />
+            </p>
+            <p>
+                <label for="category">カテゴリー : </label>
+                <select name="category" id="category">
+                    <option value="果物">果物</option>
+                    <option value="野菜">野菜</option>
+                    <option value="乳製品">乳製品</option>
+                </select>
+            </p>
+            <p><button>登録する</button></p>
+        </form>
+    </body>
+</html>

@@ -1,7 +1,7 @@
 // 定数宣言
 const DB = "farmStand";
 
-const PRODUCTS_ENDPOINT = "/products/";
+const PRODUCTS_ENDPOINT = "/products";
 const VIEWS_DIRECTORY = "products";
 
 const PORT = 3000;
@@ -27,6 +27,7 @@ mongoose
 // Express Settings
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true }));
 
 //  ==== API ===
 // 一覧表示
@@ -35,8 +36,21 @@ app.get(PRODUCTS_ENDPOINT, async (req, res) => {
     res.render(`${VIEWS_DIRECTORY}/index`, { products });
 });
 
+// 新規商品作成
+app.get(`${PRODUCTS_ENDPOINT}/new`, (req, res) => {
+    res.render(`${VIEWS_DIRECTORY}/new`);
+});
+
+// 新規商品登録
+app.post(PRODUCTS_ENDPOINT, async (req, res) => {
+    // --- 本来はここでバリデーションチェックが必要
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.redirect(`${PRODUCTS_ENDPOINT}/${newProduct.id}`);
+});
+
 // 詳細表示
-app.get(`${PRODUCTS_ENDPOINT}:id`, async (req, res) => {
+app.get(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
     console.log(product);
