@@ -11,6 +11,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 const Product = require("./models/product");
 mongoose
     .connect(`mongodb://localhost:27017/${DB}`, {
@@ -28,6 +29,7 @@ mongoose
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 //  ==== API ===
 // 一覧表示
@@ -36,7 +38,7 @@ app.get(PRODUCTS_ENDPOINT, async (req, res) => {
     res.render(`${VIEWS_DIRECTORY}/index`, { products });
 });
 
-// 新規商品作成
+// 新規商品作成ページへ
 app.get(`${PRODUCTS_ENDPOINT}/new`, (req, res) => {
     res.render(`${VIEWS_DIRECTORY}/new`);
 });
@@ -49,11 +51,22 @@ app.post(PRODUCTS_ENDPOINT, async (req, res) => {
     res.redirect(`${PRODUCTS_ENDPOINT}/${newProduct.id}`);
 });
 
+// 商品編集ページへ
+app.get(`${PRODUCTS_ENDPOINT}/:id/edit`, async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    res.render(`${VIEWS_DIRECTORY}/edit`, { product });
+});
+
+app.put(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
+    console.log(req.body);
+    res.send("put!!");
+});
+
 // 詳細表示
 app.get(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     const { id } = req.params;
     const product = await Product.findById(id);
-    console.log(product);
     res.render(`${VIEWS_DIRECTORY}/show`, { product });
 });
 
