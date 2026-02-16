@@ -1,5 +1,9 @@
 // 定数宣言
 const DB = "farmStand";
+
+const PRODUCTS_ENDPOINT = "/products/";
+const VIEWS_DIRECTORY = "products";
+
 const PORT = 3000;
 
 // Required Package and Mongoose
@@ -24,9 +28,19 @@ mongoose
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.get("/products", async (req, res) => {
+//  ==== API ===
+// 一覧表示
+app.get(PRODUCTS_ENDPOINT, async (req, res) => {
     const products = await Product.find();
-    res.render("products/index", { products });
+    res.render(`${VIEWS_DIRECTORY}/index`, { products });
+});
+
+// 詳細表示
+app.get(`${PRODUCTS_ENDPOINT}:id`, async (req, res) => {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    console.log(product);
+    res.render(`${VIEWS_DIRECTORY}/show`, { product });
 });
 
 // Express Server Setup
