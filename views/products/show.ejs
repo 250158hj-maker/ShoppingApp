@@ -14,7 +14,9 @@
             </li>
             <li>
                 カテゴリー :
-                <%= product.category %>
+                <a href="/products?category=<%= product.category %>">
+                    <%= product.category %>
+                </a>
             </li>
         </ul>
         <a href="/products/">商品一覧</a>

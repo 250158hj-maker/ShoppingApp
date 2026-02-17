@@ -15,6 +15,7 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Product = require("./models/product");
 const { createHistogram } = require("perf_hooks");
+const { type } = require("os");
 mongoose
     .connect(`mongodb://localhost:27017/${DB}`, {
         useNewUrlParser: true,
@@ -36,8 +37,14 @@ app.use(methodOverride("_method"));
 //  ==== API ===
 // 一覧表示
 app.get(PRODUCTS_ENDPOINT, async (req, res) => {
-    const products = await Product.find();
-    res.render(`${VIEWS_DIRECTORY}/index`, { products });
+    const { category } = req.query;
+    if (category) {
+        const products = await Product.find({ category });
+        res.render(`${VIEWS_DIRECTORY}/index`, { products, category });
+    } else {
+        const products = await Product.find();
+        res.render(`${VIEWS_DIRECTORY}/index`, { products, category: "All" });
+    }
 });
 
 // 新規商品作成ページへ
