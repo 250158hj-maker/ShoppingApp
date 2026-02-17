@@ -12,6 +12,13 @@
             カテゴリー :
             <%= category %>
         </h2>
+        <% } else { %>
+        <div>
+            カテゴリーで抽出 :
+            <% for (let c of categories) { %>
+            <a href="/products?category=<%= c %>"> <%= c %> </a>
+            <% } %>
+        </div>
         <% } %>
         <ul>
             <% for (let product of products) { %>

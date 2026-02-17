@@ -43,7 +43,11 @@ app.get(PRODUCTS_ENDPOINT, async (req, res) => {
         res.render(`${VIEWS_DIRECTORY}/index`, { products, category });
     } else {
         const products = await Product.find();
-        res.render(`${VIEWS_DIRECTORY}/index`, { products, category: "All" });
+        res.render(`${VIEWS_DIRECTORY}/index`, {
+            products,
+            category: "All",
+            categories,
+        });
     }
 });
 
