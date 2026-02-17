@@ -19,5 +19,11 @@
         </ul>
         <a href="/products/">商品一覧</a>
         <a href="/products/<%= product._id %>/edit">編集</a>
+        <form
+            action="/products/<%= product._id %>?_method=delete"
+            method="post"
+        >
+            <button>削除</button>
+        </form>
     </body>
 </html>

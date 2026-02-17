@@ -72,6 +72,14 @@ app.put(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     res.redirect(`${PRODUCTS_ENDPOINT}/${product._id}`);
 });
 
+// 商品の削除
+app.delete(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
+    const { id } = req.params;
+    // 削除した商品をログに出すなどの機能の実装ができる
+    const delProduct = await Product.findByIdAndDelete(id);
+    res.redirect(PRODUCTS_ENDPOINT);
+});
+
 // 詳細表示
 app.get(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     const { id } = req.params;
