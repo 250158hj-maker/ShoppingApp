@@ -1,9 +1,7 @@
 // 定数宣言
-const DB = "farmStand";
-
+const DB = "farmStandTake2";
 const PRODUCTS_ENDPOINT = "/products";
 const VIEWS_DIRECTORY = "products";
-
 const categories = ["野菜", "果物", "乳製品", "パン類"];
 const PORT = 3000;
 
@@ -14,8 +12,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Product = require("./models/product");
-const { createHistogram } = require("perf_hooks");
-const { type } = require("os");
+
 mongoose
     .connect(`mongodb://localhost:27017/${DB}`, {
         useNewUrlParser: true,
@@ -34,7 +31,6 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-//  ==== API ===
 // 一覧表示
 app.get(PRODUCTS_ENDPOINT, async (req, res) => {
     const { category } = req.query;
