@@ -60,14 +60,15 @@ app.post(FARMS_ENDPOINT, async (req, res) => {
 // 詳細表示
 app.get(`${FARMS_ENDPOINT}/:id`, async (req, res) => {
     const { id } = req.params;
-    const farm = await Farm.findById(id);
+    const farm = await Farm.findById(id).populate("products");
     res.render(`${VIEWS_FARMS}/show`, { farm });
 });
 
 // 【重要】農場の関連を持った商品の新規登録ページ
-app.get(`${FARMS_ENDPOINT}/:id${PRODUCTS_ENDPOINT}/new`, (req, res) => {
+app.get(`${FARMS_ENDPOINT}/:id${PRODUCTS_ENDPOINT}/new`, async (req, res) => {
     const { id } = req.params;
-    res.render(`${VIEWS_PRODUCTS}/new`, { categories, id });
+    const farm = await Farm.findById(id);
+    res.render(`${VIEWS_PRODUCTS}/new`, { categories, farm });
 });
 
 // 【重要】農場の関連を持った商品の登録

@@ -6,8 +6,9 @@
         <title>FarmApp | New</title>
     </head>
     <body>
-        <h1>商品の新規登録</h1>
-        <form action="/farms/<%= id %>/products/" method="post">
+        <h1><%= farm.name %></h1>
+        <h2>商品の新規登録</h2>
+        <form action="/farms/<%= farm._id %>/products/" method="post">
             <p>
                 <label for="name">商品名 : </label>
                 <input type="text" name="name" id="name" placeholder="商品名" />
@@ -31,6 +32,6 @@
             </p>
             <p><button>登録する</button></p>
         </form>
-        <a href="/products/">商品一覧</a>
+        <a href="/farms/<%= farm._id %>">農場に戻る</a>
     </body>
 </html>
