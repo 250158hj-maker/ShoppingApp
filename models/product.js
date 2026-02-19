@@ -1,16 +1,15 @@
-// 定数宣言
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-// Model Setting
-const productSchema = new mongoose.Schema({
+const productSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, "商品名は必須です。"],
     },
     price: {
         type: Number,
         required: true,
-        min: [0, "priceは0以上の値にしてください"],
+        min: [0, "価格は0以上で、必須です。"],
     },
     category: {
         type: String,
@@ -19,6 +18,10 @@ const productSchema = new mongoose.Schema({
             message:
                 "カテゴリーは「果物・野菜・乳製品」のいずれかのみ使用できます",
         },
+    },
+    farm: {
+        type: Schema.Types.ObjectId,
+        ref: "Farm",
     },
 });
 
