@@ -21,7 +21,9 @@
         <h2>商品一覧</h2>
         <ul>
             <% for (let product of farm.products) { %>
-            <li><%= product.name %></li>
+            <li>
+                <a href="/products/<%= product._id %>"><%= product.name %></a>
+            </li>
             <% } %>
         </ul>
 

@@ -145,7 +145,8 @@ app.delete(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
 // 詳細表示
 app.get(`${PRODUCTS_ENDPOINT}/:id`, async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("farm", "name");
+    console.log(product);
     res.render(`${VIEWS_PRODUCTS}/show`, { product });
 });
 
