@@ -36,6 +36,8 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
+// ===============farms routing===============
+
 // 農場一覧表示
 app.get(FARMS_ENDPOINT, async (req, res) => {
     const farms = await Farm.find();
@@ -55,6 +57,14 @@ app.post(FARMS_ENDPOINT, async (req, res) => {
     res.redirect(FARMS_ENDPOINT);
 });
 
+// 詳細表示
+app.get(`${FARMS_ENDPOINT}/:id`, async (req, res) => {
+    const { id } = req.params;
+    const farm = await Farm.findById(id);
+    res.render(`${VIEWS_FARMS}/show`, { farm });
+});
+
+// ===============products routing===============
 // 一覧表示
 app.get(PRODUCTS_ENDPOINT, async (req, res) => {
     const { category } = req.query;
