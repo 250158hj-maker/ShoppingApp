@@ -16,6 +16,7 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const Product = require("./models/product");
 const Farm = require("./models/farm");
+const { rmSync } = require("fs");
 
 const app = express();
 mongoose
@@ -53,7 +54,14 @@ app.get(`${FARMS_ENDPOINT}/new`, (req, res) => {
 app.post(FARMS_ENDPOINT, async (req, res) => {
     const farm = new Farm(req.body);
     await farm.save();
-    // 一覧ページへリダイレクト
+    // 農場一覧へリダイレクト
+    res.redirect(FARMS_ENDPOINT);
+});
+
+// 農場の削除
+app.delete(`${FARMS_ENDPOINT}/:id`, async (req, res) => {
+    await Farm.findByIdAndDelete(req.params.id);
+    // 農場一覧へリダイレクト
     res.redirect(FARMS_ENDPOINT);
 });
 
