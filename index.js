@@ -64,6 +64,26 @@ app.get(`${FARMS_ENDPOINT}/:id`, async (req, res) => {
     res.render(`${VIEWS_FARMS}/show`, { farm });
 });
 
+// 【重要】農場の関連を持った商品の新規登録ページ
+app.get(`${FARMS_ENDPOINT}/:id${PRODUCTS_ENDPOINT}/new`, (req, res) => {
+    const { id } = req.params;
+    res.render(`${VIEWS_PRODUCTS}/new`, { categories, id });
+});
+
+// 【重要】農場の関連を持った商品の登録
+app.post(`${FARMS_ENDPOINT}/:id${PRODUCTS_ENDPOINT}`, async (req, res) => {
+    const { name, price, category } = req.body;
+    const { id } = req.params;
+    const product = new Product({ name, price, category });
+    const farm = await Farm.findById(id);
+    farm.products.push(product);
+    product.farm = farm;
+    await product.save();
+    await farm.save();
+    // 農場の詳細ページへリダイレクト
+    res.redirect(`${FARMS_ENDPOINT}/${farm._id}`);
+});
+
 // ===============products routing===============
 // 一覧表示
 app.get(PRODUCTS_ENDPOINT, async (req, res) => {
